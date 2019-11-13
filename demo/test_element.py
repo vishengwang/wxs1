@@ -25,15 +25,15 @@ def test_radio(driver):#单选
     sleep(2)
 
 
-#def test_select(driver):#下拉框
+def test_select(driver):#下拉框
     driver.get("http://ui.yansl.com/#/select")
     sleep(2)
 
-    select = driver.find_element_by_xpath("//*[@id='form']/form/div[2]/div/div/div[1]")
+    select = driver.find_element_by_xpath("//*[@id='form']/form/div[2]/div/div/div/input")
     #点击
     select.click()
     sleep(2)
-    option = driver.find_element_by_xpath("(//span[text()='双皮奶'][last()])")
+    option = driver.find_element_by_xpath("(//span[text()='双皮奶'])[last()]")
     actions = ActionChains(driver)
     actions.move_to_element(option).perform()
     sleep(2)
