@@ -6,9 +6,9 @@ from selenium import webdriver
 def driver():
     #打开浏览器
     driver=webdriver.Chrome('../chrome_78/chromedriver.exe')
-
     #调整窗口大小
     driver.maximize_window()
+    #driver.implicitly_wait(5)#隐式等待
 
     #关闭浏览器，而不退出driver
     # driver.close()

@@ -26,4 +26,4 @@ def test_browser(driver):
 
 
 #关闭浏览器，不退出driver
-    driver.quit()
+driver.quit()

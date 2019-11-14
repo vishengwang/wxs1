@@ -78,7 +78,7 @@ def test_alert(driver):#警示框 弹框
     alert.accept()
     sleep(2)
 
-def test_windows(driver):
+def test_windows(driver):#windows窗口切换
     driver.get("http://192.168.1.128:8082/xuepl/demo.html")
     sleep(2)
 
@@ -103,6 +103,62 @@ def test_windows(driver):
         sleep(2)
         if driver.title.__contains__("京东"):
             break
+
+def test_iframe(driver):#嵌套界面
+    driver.get("http://192.168.1.128:8082/xuepl1/frame/main.html")
+    sleep(2)
+
+    frame = driver.find_element_by_xpath('/html/frameset/frameset/frame[1]')
+    driver.switch_to.frame(frame)#切换（switch_to）
+    sleep(2)
+    driver.find_element_by_partial_link_text('京东').click()
+    sleep(2)
+    #退出当前iframe
+    driver.switch_to.parent_frame()
+    #回到初始页面
+    #driver.switch_to.default_content()
+    sleep(2)
+    iframe = driver.find_element_by_xpath("/html/frameset/frameset/frame[2]")
+    driver.switch_to.frame(iframe)
+    sleep(2)
+    inpu = driver.find_element_by_xpath('//*[@id="key"]')
+    inpu.send_keys("手机")
+    sleep(2)
+
+def test_wait(driver):#
+    driver.get("http://ui.yansl.com/#/loading")
+    bt = driver.find_element_by_xpath('//*[@id="test_wait"]/span')
+    bt.click()
+    driver.implicitly_wait(5) # 隐试等待
+    bt1 = driver.find_element_by_xpath('//*[@id="form"]/form/div[1]/div/div/div[3]/table/tbody/tr[1]/td[2]/div')
+
+    print(bt1.text)
+    sleep(2)
+
+    def test_text(driver):  # 用展示文本做断言
+        driver.get("http://ui.yansl.com/#/message")
+        buttons = driver.find_element_by_xpath("//label[contains(text(),'自动关闭提示')]/..//span[text()='消息']")
+        buttons.click()
+        message = driver.find_element_by_xpath("//div[@role='alert']/p")
+        text = message.text
+        print(text)
+        assert "这是一条消息" in text  # 断言
+        sleep(2)
+
+    def test_page_soure(driver):  # 对界面原代码做断言
+        driver.get("http://ui.yansl.com/")
+        driver.find_element_by_xpath("//*[@id='app']/section/section/aside/ul/li[3]/div").click()  # 界面提示 + 点击
+        sleep(2)
+        driver.find_element_by_xpath("//li[contains(text(),'消息提示')]").click()  # 界面提示 + 点击
+        sleep(2)
+        source = driver.page_source  # 界面源代码
+        print(source)
+        assert "手工关闭提示" in source  # 断言
+        sleep(2)
+
+
+
+
 
 
 
